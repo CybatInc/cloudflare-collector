@@ -6,6 +6,7 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "keep_vars": true,
   "vars": {
     "CYBAT_INGESTION_URL": "https://gcp-ingest.cybat.co",
     "CYBAT_MAX_BODY_BYTES": "65536",

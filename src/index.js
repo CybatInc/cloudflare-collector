@@ -71,7 +71,7 @@ export async function dispatchToCybat(telemetryRequest, env, status = 0, latency
   try {
     const apiKey = env.CYBAT_API_KEY;
     if (!apiKey) {
-      console.warn('[Cybat] CYBAT_API_KEY secret is not configured. Telemetry dispatch skipped.');
+      console.warn(`[Cybat] CYBAT_API_KEY secret is not configured. Telemetry dispatch skipped. (Available env keys: ${Object.keys(env).join(', ') || 'none'})`);
       return;
     }
 
