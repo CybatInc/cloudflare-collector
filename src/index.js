@@ -122,7 +122,7 @@ export async function dispatchToCybat(telemetryRequest, env, status = 0, latency
         'X-Client-JA4': ja4
       },
       body: JSON.stringify([event]),
-      signal: AbortSignal.timeout(5000)
+      signal: AbortSignal.timeout(10000)
     });
 
     if (ingestResponse.ok) {
