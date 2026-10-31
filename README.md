@@ -2,6 +2,7 @@
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/CybatInc/cloudflare-collector)
 
 **Cybat Intelligence Engine Edge Collector** is an out-of-band reverse proxy sensor deployed at Cloudflare's network edge. It monitors API traffic for zero-day logic flaws, BOLA (Broken Object Level Authorization), and malformed payload injection **without adding any latency (0 ms)** to customer applications.
 
@@ -59,7 +60,24 @@ Traditional in-line security proxies introduce round-trip network hops that degr
 
 ## 🚀 Deployment
 
-### Option A: Cloudflare Workers Builds (Recommended / Automated CI/CD)
+### ⚡ Option A: 1-Click "Deploy to Cloudflare" Button (Fastest / Recommended)
+
+Deploy the Cybat Edge Collector directly to your Cloudflare account in under 60 seconds without requiring local CLI tools:
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/CybatInc/cloudflare-collector)
+
+1. Click the **Deploy to Cloudflare** button above (or navigate to [deploy.workers.cloudflare.com/?url=https://github.com/CybatInc/cloudflare-collector](https://deploy.workers.cloudflare.com/?url=https://github.com/CybatInc/cloudflare-collector)).
+2. Log in to your Cloudflare account and authorize Cloudflare to fork and deploy the repository.
+3. Once the build completes:
+   * Open the Worker in **Workers & Pages → `cybat-edge-collector`**.
+   * Go to **Settings → Variables and secrets**.
+   * Click **+ Add**, select **Secret** from the dropdown, enter `CYBAT_API_KEY`, and paste your key from the Cybat Dashboard.
+   * Click **Deploy**.
+4. In **Settings → Domains & Routes**, bind your target route (e.g. `api.yourdomain.com/*`).
+
+---
+
+### Option B: Cloudflare Workers Builds (Git Integration)
 
 1. Fork or push this repository to your GitHub/GitLab account.
 2. In the **Cloudflare Dashboard**, navigate to **Compute (Workers) → Workers & Pages → Create application**.
@@ -74,7 +92,7 @@ Traditional in-line security proxies introduce round-trip network hops that degr
 
 ---
 
-### Option B: Deploy via Wrangler CLI
+### Option C: Deploy via Wrangler CLI
 
 #### 1. Clone & Install
 ```bash
