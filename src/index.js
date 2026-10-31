@@ -69,7 +69,7 @@ export async function extractBodySafely(request, maxBodyBytes = DEFAULT_MAX_BODY
  */
 export async function dispatchToCybat(telemetryRequest, env, status = 0, latencyMs = 0) {
   try {
-    const apiKey = env.CYBAT_API_KEY;
+    const apiKey = env.CYBAT_API_KEY || (typeof process !== 'undefined' && process.env?.CYBAT_API_KEY);
     if (!apiKey) {
       console.warn(`[Cybat] CYBAT_API_KEY secret is not configured. Telemetry dispatch skipped. (Available env keys: ${Object.keys(env).join(', ') || 'none'})`);
       return;
