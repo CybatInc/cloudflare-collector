@@ -21,6 +21,11 @@ resource "cloudflare_worker_script" "cybat_collector" {
   }
 
   plain_text_binding {
+    name = "CYBAT_PROJECT_ID"
+    text = var.cybat_project_id
+  }
+
+  plain_text_binding {
     name = "CYBAT_MAX_BODY_BYTES"
     text = tostring(var.cybat_max_body_bytes)
   }

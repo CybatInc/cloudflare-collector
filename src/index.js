@@ -71,7 +71,7 @@ export async function dispatchToCybat(telemetryRequest, env, status = 0, latency
   try {
     const apiKey = env.CYBAT_API_KEY;
     if (!apiKey) {
-      // Missing API key in environment: fail silently to protect origin traffic
+      console.warn('[Cybat] CYBAT_API_KEY secret is not configured. Telemetry dispatch skipped.');
       return;
     }
 
@@ -92,6 +92,8 @@ export async function dispatchToCybat(telemetryRequest, env, status = 0, latency
 
     const { body, bodyTruncated } = await extractBodySafely(telemetryRequest, maxBodyBytes);
 
+    const projectId = env.CYBAT_PROJECT_ID || 'cloudflare';
+
     const event = {
       method: telemetryRequest.method,
       url: telemetryRequest.url,
@@ -104,12 +106,13 @@ export async function dispatchToCybat(telemetryRequest, env, status = 0, latency
       ja4,
       asn,
       country,
+      projectId,
       ...(body !== undefined ? { body, bodyTruncated } : {})
     };
 
     const ingestionUrl = env.CYBAT_INGESTION_URL || 'https://gcp-ingest.cybat.co';
 
-    await fetch(ingestionUrl, {
+    const ingestResponse = await fetch(ingestionUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -121,9 +124,16 @@ export async function dispatchToCybat(telemetryRequest, env, status = 0, latency
       body: JSON.stringify([event]),
       signal: AbortSignal.timeout(5000)
     });
-  } catch {
-    // Fail-open: swallow telemetry errors completely.
-    // Origin traffic and client experience must never be affected.
+
+    if (ingestResponse.ok) {
+      console.log(`[Cybat] Telemetry dispatched successfully (HTTP ${ingestResponse.status}) to ${ingestionUrl} [${event.method} ${event.url}]`);
+    } else {
+      const errText = await ingestResponse.text().catch(() => '');
+      console.warn(`[Cybat] Ingest endpoint returned HTTP ${ingestResponse.status}: ${errText}`);
+    }
+  } catch (err) {
+    // Fail-open: log for observability, but suppress so origin traffic is never disrupted
+    console.warn(`[Cybat] Background telemetry dispatch encountered an issue: ${err.message}`);
   }
 }
 

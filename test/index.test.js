@@ -180,6 +180,7 @@ describe('Cybat Intelligence Engine Edge Collector Tests', () => {
       assert.equal(payload[0].asn, '13335');
       assert.equal(payload[0].country, 'US');
       assert.equal(payload[0].latencyMs, 32);
+      assert.equal(payload[0].projectId, 'cloudflare');
 
       // Verify that secret_token was redacted before sending
       const parsedBody = JSON.parse(payload[0].body);
@@ -187,6 +188,24 @@ describe('Cybat Intelligence Engine Edge Collector Tests', () => {
       assert.equal(parsedBody.target_id, '42');
       assert.equal(parsedBody.secret_token.startsWith('[REDACTED'), true);
       assert.equal(payload[0].bodyTruncated, false);
+    });
+
+    test('respects custom CYBAT_PROJECT_ID environment variable', async () => {
+      let interceptedOptions = null;
+      globalThis.fetch = async (url, options) => {
+        interceptedOptions = options;
+        return new Response(JSON.stringify({ status: 'accepted' }), { status: 202 });
+      };
+
+      const req = new Request('https://api.example.com/items', { method: 'POST', body: '{}' });
+      const env = {
+        CYBAT_API_KEY: 'test_key',
+        CYBAT_PROJECT_ID: 'production-cf-edge'
+      };
+
+      await dispatchToCybat(req, env, 200, 10);
+      const payload = JSON.parse(interceptedOptions.body);
+      assert.equal(payload[0].projectId, 'production-cf-edge');
     });
 
     test('fails silently (fail-open) if ingest network request throws', async () => {

@@ -26,6 +26,12 @@ variable "cybat_ingestion_url" {
   default     = "https://gcp-ingest.cybat.co"
 }
 
+variable "cybat_project_id" {
+  description = "The project identifier reported to Cybat for analytics breakdown."
+  type        = string
+  default     = "cloudflare"
+}
+
 variable "cybat_max_body_bytes" {
   description = "Maximum body size in bytes to extract for state-changing requests (default: 65536)."
   type        = number

@@ -105,6 +105,7 @@ Configured in `wrangler.jsonc` or the Cloudflare Dashboard:
 | :--- | :--- | :--- | :--- |
 | `CYBAT_API_KEY` | **Secret** | *Required* | API key generated from the Cybat Dashboard. Maps traffic to your organization. |
 | `CYBAT_INGESTION_URL` | Var | `https://gcp-ingest.cybat.co` | Destination Cybat ingestion endpoint. |
+| `CYBAT_PROJECT_ID` | Var | `cloudflare` | Project identifier reported to Cybat for dashboard & analytics grouping. |
 | `CYBAT_MAX_BODY_BYTES` | Var | `65536` (64 KB) | Maximum request body extraction size in bytes. |
 | `UPSTREAM_ORIGIN` | Var | *Optional* | Upstream target URL used for local emulation and testing (e.g., `https://httpbin.org`). |
 

@@ -8,7 +8,8 @@
   ],
   "vars": {
     "CYBAT_INGESTION_URL": "https://gcp-ingest.cybat.co",
-    "CYBAT_MAX_BODY_BYTES": "65536"
+    "CYBAT_MAX_BODY_BYTES": "65536",
+    "CYBAT_PROJECT_ID": "cloudflare"
   },
   "observability": {
     "enabled": true
