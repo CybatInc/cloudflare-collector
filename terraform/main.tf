@@ -21,8 +21,8 @@ resource "cloudflare_worker_script" "cybat_collector" {
   }
 
   plain_text_binding {
-    name = "CYBAT_PROJECT_ID"
-    text = var.cybat_project_id
+    name = "PROJECT_ID"
+    text = var.project_id
   }
 
   plain_text_binding {

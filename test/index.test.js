@@ -190,7 +190,7 @@ describe('Cybat Intelligence Engine Edge Collector Tests', () => {
       assert.equal(payload[0].bodyTruncated, false);
     });
 
-    test('respects custom CYBAT_PROJECT_ID environment variable', async () => {
+    test('respects custom PROJECT_ID environment variable', async () => {
       let interceptedOptions = null;
       globalThis.fetch = async (url, options) => {
         interceptedOptions = options;
@@ -200,12 +200,30 @@ describe('Cybat Intelligence Engine Edge Collector Tests', () => {
       const req = new Request('https://api.example.com/items', { method: 'POST', body: '{}' });
       const env = {
         CYBAT_API_KEY: 'test_key',
-        CYBAT_PROJECT_ID: 'production-cf-edge'
+        PROJECT_ID: 'production-cf-edge'
       };
 
       await dispatchToCybat(req, env, 200, 10);
       const payload = JSON.parse(interceptedOptions.body);
       assert.equal(payload[0].projectId, 'production-cf-edge');
+    });
+
+    test('respects legacy CYBAT_PROJECT_ID environment variable as fallback', async () => {
+      let interceptedOptions = null;
+      globalThis.fetch = async (url, options) => {
+        interceptedOptions = options;
+        return new Response(JSON.stringify({ status: 'accepted' }), { status: 202 });
+      };
+
+      const req = new Request('https://api.example.com/items', { method: 'POST', body: '{}' });
+      const env = {
+        CYBAT_API_KEY: 'test_key',
+        CYBAT_PROJECT_ID: 'legacy-project'
+      };
+
+      await dispatchToCybat(req, env, 200, 10);
+      const payload = JSON.parse(interceptedOptions.body);
+      assert.equal(payload[0].projectId, 'legacy-project');
     });
 
     test('fails silently (fail-open) if ingest network request throws', async () => {

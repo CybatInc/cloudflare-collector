@@ -92,7 +92,7 @@ export async function dispatchToCybat(telemetryRequest, env, status = 0, latency
 
     const { body, bodyTruncated } = await extractBodySafely(telemetryRequest, maxBodyBytes);
 
-    const projectId = env.CYBAT_PROJECT_ID || 'cloudflare';
+    const projectId = env.PROJECT_ID || env.CYBAT_PROJECT_ID || 'cloudflare';
 
     const event = {
       method: telemetryRequest.method,

@@ -26,7 +26,7 @@ variable "cybat_ingestion_url" {
   default     = "https://gcp-ingest.cybat.co"
 }
 
-variable "cybat_project_id" {
+variable "project_id" {
   description = "The project identifier reported to Cybat for analytics breakdown."
   type        = string
   default     = "cloudflare"
