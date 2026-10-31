@@ -1,0 +1,27 @@
+{
+  "name": "cloudflare-collector",
+  "version": "1.0.0",
+  "description": "Cybat Intelligence Engine Edge Collector for Cloudflare Workers - Out-of-band reverse proxy telemetry",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "cybat",
+    "cloudflare",
+    "cloudflare-workers",
+    "edge",
+    "security",
+    "telemetry",
+    "bola",
+    "waf"
+  ],
+  "author": "Cybat Inc.",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "wrangler": "^4.156.0"
+  }
+}
