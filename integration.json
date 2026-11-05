@@ -1,0 +1,68 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/platform/integrations/schema.json",
+  "id": "cybat-intelligence-engine",
+  "name": "Cybat Intelligence Engine",
+  "version": "1.0.0",
+  "tagline": "Real-time AI threat intelligence, JA4 fingerprinting, and behavioral API security with 0 ms origin latency.",
+  "description": "Protect your APIs and web applications with autonomous AI threat detection. The Cybat Edge Collector intercepts HTTP/HTTPS traffic at Cloudflare's edge, extracts behavioral signals and JA4 fingerprints, scrubs sensitive credentials in memory, and asynchronously dispatches telemetry to your Cybat tenant out-of-band.",
+  "categories": [
+    "Security",
+    "Monitoring & Logging",
+    "Developer Tools"
+  ],
+  "author": {
+    "name": "Cybat Inc.",
+    "website": "https://cybat.co",
+    "support": "support@cybat.co"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CybatInc/cloudflare-collector.git"
+  },
+  "icon": "./docs/assets/cybat-icon.svg",
+  "runtime": "workerd",
+  "worker": {
+    "entrypoint": "src/index.js",
+    "compatibility_date": "2024-10-30",
+    "compatibility_flags": [
+      "nodejs_compat"
+    ],
+    "bindings": [
+      {
+        "name": "CYBAT_API_KEY",
+        "type": "secret",
+        "required": true,
+        "description": "Organization API key obtained from your Cybat Intelligence Dashboard (https://app.cybat.co)."
+      },
+      {
+        "name": "PROJECT_ID",
+        "type": "variable",
+        "required": false,
+        "default": "cloudflare",
+        "description": "Project identifier used to segment telemetry and security rules inside Cybat."
+      },
+      {
+        "name": "CYBAT_INGESTION_URL",
+        "type": "variable",
+        "required": false,
+        "default": "https://gcp-ingest.cybat.co",
+        "description": "Cybat Intelligence regional ingestion endpoint."
+      },
+      {
+        "name": "CYBAT_MAX_BODY_BYTES",
+        "type": "variable",
+        "required": false,
+        "default": "65536",
+        "description": "Maximum payload extraction ceiling in bytes (default 64 KB)."
+      }
+    ]
+  },
+  "deployment": {
+    "mode": "reverse-proxy",
+    "routes": [
+      "/*"
+    ],
+    "fail_open": true,
+    "latency_impact_ms": 0
+  }
+}

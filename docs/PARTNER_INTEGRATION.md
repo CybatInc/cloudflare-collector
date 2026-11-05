@@ -114,9 +114,15 @@ Cloudflare Partner Integrations support two standard installation models:
 
 ## 5. Step-by-Step Cloudflare Partner Program Submission Guide
 
+### Partner Assets Directory
+* **Pre-Filled Partner Application Dossier:** [`PARTNER_APPLICATION_DOSSIER.md`](PARTNER_APPLICATION_DOSSIER.md)
+* **Cloudflare Partner Engineering Review Checklist:** [`PARTNER_REVIEW_CHECKLIST.md`](PARTNER_REVIEW_CHECKLIST.md)
+* **Integration Catalog Manifest:** [`../integration.json`](../integration.json)
+* **Marketplace Icon Asset:** [`assets/cybat-icon.svg`](assets/cybat-icon.svg)
+
 ### Step 1: Submit Technology Partner Application
 1. Navigate to the [Cloudflare Technology Partner Program Application](https://www.cloudflare.com/partners/technology-partners/).
-2. Submit the organization profile:
+2. Fill out the application using the pre-formatted responses in the [Partner Application Dossier](PARTNER_APPLICATION_DOSSIER.md):
    - **Company:** Cybat Inc.
    - **Contact:** CTO / Engineering Leadership (`cto@cybat.co`).
    - **Product Overview:** Cybat Intelligence Engine (Cloudflare Workers Edge Collector).
@@ -131,7 +137,8 @@ Once approved, Cloudflare provides:
 ### Step 3: Technical Validation & Code Review
 Provide Cloudflare's partner engineers with:
 - GitHub Repository: `https://github.com/CybatInc/cloudflare-collector`
-- Verified unit test suite (`npm test` — 14/14 passing).
+- Integration Manifest: [`integration.json`](../integration.json)
+- Verified unit test suite (`npm test` — 14/14 passing, documented in [Partner Review Checklist](PARTNER_REVIEW_CHECKLIST.md)).
 - Live verification proof on Cloudflare Workers edge (e.g., HTTP 202 Ingest confirmation).
 
 ### Step 4: Marketplace Publishing & Joint GTM

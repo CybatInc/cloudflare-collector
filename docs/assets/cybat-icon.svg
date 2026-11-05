@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="cybatBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0F19"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <linearGradient id="cybatAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4B5FD"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#cybatBg)"/>
+  <rect x="1" y="1" width="126" height="126" rx="27" fill="none" stroke="#1F2937" stroke-width="2"/>
+  <text x="24" y="98" font-family="Inter, -apple-system, BlinkMacSystemFont, Arial Black, sans-serif" font-size="92" font-weight="900" font-style="italic" fill="#FFFFFF" letter-spacing="-4">C</text>
+  <rect x="88" y="24" width="24" height="24" rx="6" fill="url(#cybatAccent)"/>
+</svg>

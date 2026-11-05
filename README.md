@@ -176,8 +176,11 @@ curl -i -X POST http://localhost:8787/post \
 
 Cybat is designed to integrate natively into the Cloudflare Dashboard under **Workers & Pages → Integrations**.
 
-* For full architectural specifications, marketplace listing metadata, security assurances, and onboarding flows, see the **[Cloudflare Partner Integration Specification](docs/PARTNER_INTEGRATION.md)**.
-* To apply or review our Technology Partner listing, visit the [Cloudflare Technology Partner Program](https://www.cloudflare.com/partners/technology-partners/).
+* **Technical Specification & Overview:** [Cloudflare Partner Integration Specification](docs/PARTNER_INTEGRATION.md)
+* **Pre-Filled Submission Dossier:** [Partner Program Application Dossier](docs/PARTNER_APPLICATION_DOSSIER.md)
+* **Partner Review & QA Evidence:** [Partner Engineering Technical Review Checklist](docs/PARTNER_REVIEW_CHECKLIST.md)
+* **Integration Catalog Manifest:** [`integration.json`](integration.json)
+* **Official Program Application:** [Cloudflare Technology Partner Program](https://www.cloudflare.com/partners/technology-partners/)
 
 ---
 
