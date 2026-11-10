@@ -278,5 +278,36 @@ describe('Cybat Intelligence Engine Edge Collector Tests', () => {
 
       await waitUntilPromise;
     });
+
+    test('correctly forwards to UPSTREAM_ORIGIN preserving subpaths and setting host', async () => {
+      let forwardedUrl = null;
+      let forwardedHost = null;
+
+      globalThis.fetch = async (req, opts) => {
+        if (req instanceof Request) {
+          forwardedUrl = req.url;
+          forwardedHost = req.headers.get('host');
+          return new Response('{"status":"ok"}', { status: 200 });
+        }
+        return new Response(JSON.stringify({ status: 'accepted' }), { status: 202 });
+      };
+
+      const ctx = { waitUntil: () => {} };
+      const env = {
+        CYBAT_API_KEY: 'test_key',
+        CYBAT_INGESTION_URL: 'https://ingest.cybat.co',
+        UPSTREAM_ORIGIN: 'https://us-central1-demo.cloudfunctions.net/my-function-api'
+      };
+
+      const incomingReq = new Request('https://worker.dev/api/tramites?search=predial', {
+        method: 'GET',
+        headers: { host: 'worker.dev', 'User-Agent': 'curl/8.0' }
+      });
+
+      const res = await worker.fetch(incomingReq, env, ctx);
+      assert.equal(res.status, 200);
+      assert.equal(forwardedUrl, 'https://us-central1-demo.cloudfunctions.net/my-function-api/api/tramites?search=predial');
+      assert.equal(forwardedHost, 'us-central1-demo.cloudfunctions.net');
+    });
   });
 });

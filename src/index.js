@@ -161,7 +161,17 @@ export default {
         targetUrl.protocol = upstreamUrl.protocol;
         targetUrl.host = upstreamUrl.host;
         targetUrl.port = upstreamUrl.port;
-        originResponse = await fetch(new Request(targetUrl.toString(), request));
+
+        // Preserve upstream base path (e.g. for Google Cloud Functions / subpath APIs)
+        const basePath = upstreamUrl.pathname.replace(/\/+$/, '');
+        if (basePath && basePath !== '') {
+          const incomingPath = targetUrl.pathname.startsWith('/') ? targetUrl.pathname : `/${targetUrl.pathname}`;
+          targetUrl.pathname = `${basePath}${incomingPath}`;
+        }
+
+        const forwardedReq = new Request(targetUrl.toString(), request);
+        forwardedReq.headers.set('host', upstreamUrl.host);
+        originResponse = await fetch(forwardedReq);
       } else {
         originResponse = await fetch(request);
       }
